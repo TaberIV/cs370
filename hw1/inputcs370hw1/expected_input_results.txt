@@ -1,0 +1,47 @@
+//expected_results
+
+
+input1 :
+
+Full sum: 2
+First 10 digits: 2
+
+
+
+
+
+input2 :
+
+Full sum: 233196415
+First 10 digits: 233196415
+
+
+
+
+
+
+input3 :
+
+Full sum: 233196415
+First 10 digits: 233196415
+
+
+
+
+
+
+
+input4 :
+
+Full sum: 40022777400
+First 10 digits: 4002277740
+
+
+
+
+
+
+input5 :
+
+Full sum: 2222222222222222222222222222222222222222222222222200
+First 10 digits: 2222222222
