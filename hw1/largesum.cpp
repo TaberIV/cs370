@@ -1,17 +1,17 @@
-//cs370
-//hw1 "Large Sum"
-//Taber, Byrne, Loposky
-//We pledge our honor that we have abided by the Stevens Honor System
+/* 
+ * CS 370
+ * Homework 1: Large Sum
+ * Authors: Taber McFarlin, Chris Byrne, and Luke Loposky
+ * We pledge our honor that we have abided by the Stevens Honor System
+*/
 
-#include <cstdlib>
-#include <iostream>
-#include <ctime>
-#include <vector>
 #include <fstream>
-#include <string>
 #include <iostream>
+#include <string>
+#include <vector>
 
 using namespace std;
+
 
 vector<int> add(int amount, int place, vector<int> sum)
 {
@@ -51,7 +51,7 @@ int main(int argc, char *argv[])
   // Proccess
   vector<int> sum;
   sum.push_back(0);
-  
+
   string num;
 
   while (inFile >> num)
@@ -67,13 +67,14 @@ int main(int argc, char *argv[])
   }
 
   // Output
-  
+
   // Remove leading 0s
-  
-  while (sum[sum.size() - 1] == 0) {
+
+  while (sum[sum.size() - 1] == 0)
+  {
     sum.pop_back();
   }
-  
+
   int sumLen = sum.size();
 
   cout << "Full sum: ";

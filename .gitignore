@@ -1,1 +1,8 @@
 ClassExercises/
+
+# Compiled files
+*.out
+*.class
+
+# Editor files
+.vscode/
