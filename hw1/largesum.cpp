@@ -68,16 +68,16 @@ int main(int argc, char *argv[])
       sum = addDigit(num[i] - '0', sumIndex, sum);
     }
   }
-
+  
   // Remove leading 0s
-  while (sum[sum.size() - 1] == 0)
+  while (sum[sum.size() - 1] == 0 and sum.size() > 1)
   {
     sum.pop_back();
   }
 
   // Output
   int sumLen = sum.size();
-
+  
   cout << "Full sum: ";
   for (int i = sumLen - 1; i >= 0; i--)
   {
