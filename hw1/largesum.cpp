@@ -1,3 +1,8 @@
+//cs370
+//hw1 "Large Sum"
+//Taber, Byrne, Loposky
+//We pledge our honor that we have abided by the Stevens Honor System
+
 #include <cstdlib>
 #include <iostream>
 #include <ctime>
