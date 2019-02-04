@@ -69,15 +69,13 @@ int main(int argc, char *argv[])
     }
   }
 
-  // Output
-
   // Remove leading 0s
-
   while (sum[sum.size() - 1] == 0)
   {
     sum.pop_back();
   }
 
+  // Output
   int sumLen = sum.size();
 
   cout << "Full sum: ";
