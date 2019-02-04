@@ -1,9 +1,9 @@
-/* 
+/**
  * CS 370
  * Homework 1: Large Sum
  * Authors: Taber McFarlin, Chris Byrne, and Luke Loposky
  * We pledge our honor that we have abided by the Stevens Honor System
-*/
+ */
 
 #include <fstream>
 #include <iostream>
@@ -12,8 +12,11 @@
 
 using namespace std;
 
-
-vector<int> add(int amount, int place, vector<int> sum)
+/**
+ * Add a one digit value to a place in a
+ * vector representing a single number
+ */
+vector<int> addDigit(int amount, int place, vector<int> sum)
 {
   if (sum.size() <= place)
   {
@@ -26,7 +29,7 @@ vector<int> add(int amount, int place, vector<int> sum)
   {
     sum[place] -= 10;
 
-    return add(1, place + 1, sum);
+    return addDigit(1, place + 1, sum);
   }
   else
   {
@@ -62,7 +65,7 @@ int main(int argc, char *argv[])
     {
       int sumIndex = len - (i + 1);
 
-      sum = add(num[i] - '0', sumIndex, sum);
+      sum = addDigit(num[i] - '0', sumIndex, sum);
     }
   }
 
