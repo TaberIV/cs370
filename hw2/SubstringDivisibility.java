@@ -1,9 +1,14 @@
+/**
+ * Authors: Taber McFarlin, Chris Byrne, and Luke Lopouski
+ * We pledge our honor that we have abided by the Stevens Honor System
+ */
+
 import java.util.Arrays;
 
 public class SubstringDivisibility {
   public static void main(String[] args) {
+    String input = "0123456789"; //args[0];
     // Handle nput
-    String input = args[0];
 
     char[] nums = input.toCharArray();
     Arrays.sort(nums);
@@ -11,6 +16,7 @@ public class SubstringDivisibility {
     long start = System.currentTimeMillis();
 
     // Do Stuff
+
 
     // Output
     long finish = System.currentTimeMillis();
