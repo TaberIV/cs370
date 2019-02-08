@@ -16,7 +16,6 @@ public class SubstringDivisibility {
     String input = args[0];
     int inputLen = input.length();
 
-
     // Find valid substrings for each condition
     int[] primes = { 2, 3, 5, 7, 11, 13, 17 };
     int numPrimes = inputLen - 3;
