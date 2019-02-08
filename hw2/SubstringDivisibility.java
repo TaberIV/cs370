@@ -18,16 +18,21 @@ public class SubstringDivisibility {
     long start = System.nanoTime();
 
     // Build Valid numbers
-    List<Integer> validNums = getValidNums(nums);
+    List<int[]> validNums = getValidNums(nums);
 
     // Output
     long sum = 0;
-    // for (int num : validNums) {
-    //   System.out.println(num);
-    //   sum += num;
-    // }
+    for (int[] num : validNums) {
+      for (int digit : num) {
+        System.out.print(digit);
+      }
 
-    System.out.printf("Sum: %d\n", sum);
+      sum += concatInt(num);
+      System.out.println();
+    }
+
+    System.out.print("Sum: ");
+    System.out.println(sum);
     System.out.printf("Elapsed time: %.6f ms\n", (System.nanoTime() - start) / 1e6);
   }
 
@@ -52,44 +57,31 @@ public class SubstringDivisibility {
     return nums;
   }
 
-  private static int getDigit(int num, int place) {
-    if (place == 0)
-      return 0;
-
-    return (num % ((int) Math.pow(10, place))) / ((int) Math.pow(10, place - 1));
-  }
-
-  private static boolean containsDigit(int num, int digit) {
-    while (num > 0) {
-      if (getDigit(num, 1) == digit) {
-        return true;
-      }
-
-      num /= 10;
-    }
-
-    return false;
-  }
-
-  private static List<Integer> getValidNums(int[] nums) {
+  private static List<int[]> getValidNums(int[] nums) {
     return completeNum(new int[nums.length], nums, 1);
   }
 
-  private static List<Integer> completeNum(int[] digits, int[] nums, int index) {
-    List<Integer> possibleNums = new ArrayList<Integer>();
+  private static List<int[]> completeNum(int[] digits, int[] nums, int index) {
+    List<int[]> possibleNums = new ArrayList<int[]>();
 
     if (index < nums.length) {
       for (int num : nums) {
         if (validNext(digits, num, index)) {
           int[] newDigits = digits.clone();
           newDigits[index] = num;
+          
+          // System.out.printf("Added %d at index %d to ", num, index);
+          // for (int i = 0; i <= index; i++) {
+          //   System.out.print(newDigits[i]);
+          // }
+          // System.out.println();
 
           possibleNums.addAll(completeNum(newDigits, nums, index + 1));
         }
       }
     } else {
       addMissingDigit(digits, nums);
-      possibleNums.add(concatInt(digits));
+      possibleNums.add(digits);
     }
 
     return possibleNums;
@@ -97,12 +89,13 @@ public class SubstringDivisibility {
 
   private static boolean validNext(int[] digits, int next, int index) {
     // Check for uniqueness
-    for (int digit : digits) {
-      if (digit == next) {
+    for (int i = 1; i < index; i++) {
+      if (digits[i] == next) {
         return false;
       }
     }
 
+    // Check for prime conditions
     boolean primeMult = index < 3;
     if (!primeMult) {
       int concat = concatInt(digits[index - 2], digits[index - 1], next);
@@ -112,7 +105,7 @@ public class SubstringDivisibility {
     return primeMult;
   }
 
-  private static void addMissingDigit(int[] digits, int[] nums) {
+  private static int[] addMissingDigit(int[] digits, int[] nums) {
     for (int num : nums) {
       boolean found = false;
 
@@ -128,5 +121,7 @@ public class SubstringDivisibility {
         break;
       }
     }
+
+    return digits;
   }
 }
