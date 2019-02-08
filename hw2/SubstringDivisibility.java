@@ -10,11 +10,11 @@ import java.lang.StringBuilder;
 
 public class SubstringDivisibility {
   public static void main(String[] args) {
-    long start = System.currentTimeMillis();
-
     // Handle nput
-    String input = "0123456789"; // args[0];
+    String input = args[0];
     int inputLen = input.length();
+
+    long start = System.nanoTime();
 
     // Find valid permutations
     int[] primes = { 2, 3, 5, 7, 11, 13, 17 };
@@ -23,25 +23,27 @@ public class SubstringDivisibility {
     List<String>[] validSubs = getValidSubs(input, primes, numPrimes);
 
     // * DEBUG
-    // Check what is in each ArrayList
-    for (int i = 0; i < numPrimes; i++) {
-      System.out.println("\nMultiples of " + primes[i] + ":");
+    // // Check what is in each ArrayList
+    // for (int i = 0; i < numPrimes; i++) {
+    //   System.out.println("\nMultiples of " + primes[i] + ":");
 
-      for (String sub : validSubs[i]) {
-        System.out.println(sub);
-      }
-    }
+    //   for (String sub : validSubs[i]) {
+    //     System.out.println(sub);
+    //   }
+    // }
 
     // Build Valid Strings
-    // ArrayList<String> validStrings = new ArrayList<String>();
+    List<String> validStrings = getValidStrings(validSubs, input);
 
     // Output
-    long finish = System.currentTimeMillis();
-    long elapsed = finish - start;
+    long sum = 0;
+    for (String str : validStrings) {
+      System.out.println(str);
+      sum += Long.parseLong(str);
+    }
 
-    int sum = 0;
-    System.out.println("Sum: " + sum);
-    System.out.println("Elapsed time: " + elapsed + "ms");
+    System.out.printf("Sum: %d\n", sum);
+    System.out.printf("Elapsed time: %.6f ms\n", (System.nanoTime() - start) / 1e6);
   }
 
   private static List<String>[] getValidSubs(String input, int[] primes, int numPrimes) {
@@ -77,11 +79,68 @@ public class SubstringDivisibility {
 
       for (int i = numPrimes - 1; i >= 0; i--) {
         if (num % primes[i] == 0) {
-          validSubs[i].add(Integer.toString(num));
+          StringBuilder numBuild = new StringBuilder();
+
+          if (num < 100) {
+            numBuild.append('0');
+          }
+          numBuild.append(num);
+
+          validSubs[i].add(numBuild.toString());
         }
       }
     }
 
     return validSubs;
+  }
+
+  private static List<String> getValidStrings(List<String>[] validSubs, String input) {
+    return completeSubStr("", validSubs, 0, input);
+  }
+
+  private static List<String> completeSubStr(String str, List<String>[] subs, int index, String input) {
+    List<String> possibleStrings = new ArrayList<String>();
+
+    if (index < subs.length) {
+      int len = subs[index].size();
+
+      for (int i = 0; i < len; i++) {
+        String next = subs[index].get(i);
+
+        if (validNext(str, next)) {
+          possibleStrings.addAll(
+              completeSubStr(new StringBuilder().append(str).append(str.isEmpty() ? next : next.charAt(2)).toString(),
+                  subs, index + 1, input));
+        }
+      }
+    } else {
+      possibleStrings.add(addMissingDigit(str, input));
+    }
+
+    return possibleStrings;
+  }
+
+  public static boolean validNext(String str, String next) {
+    return str.isEmpty() || str.indexOf(next.charAt(2)) == -1 && str.indexOf(next.substring(0, 2)) == str.length() - 2;
+  }
+
+  public static String addMissingDigit(String str, String input) {
+    int strlen = str.length();
+    int inputlen = input.length();
+
+    for (int i = 0; i < inputlen; i++) {
+      int j;
+      for (j = 0; j < strlen; j++) {
+        if (input.charAt(i) == str.charAt(j)) {
+          break;
+        }
+      }
+
+      if (j == strlen) {
+        return new StringBuilder().append(input.charAt(i)).append(str).toString();
+      }
+    }
+
+    return str;
   }
 }
