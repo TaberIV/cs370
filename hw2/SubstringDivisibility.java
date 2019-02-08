@@ -6,52 +6,86 @@
 
 import java.util.List;
 import java.util.ArrayList;
-import java.lang.StringBuilder;
+import java.util.Arrays;
 
 public class SubstringDivisibility {
   public static void main(String[] args) {
+    // Handle input
+    int[] nums = parseInput(args[0]);
+
     long start = System.nanoTime();
 
-    // Handle nput
-    String input = args[0];
-    int inputLen = input.length();
-
-    // Find valid substrings for each condition
+    // Find valid numbers for each condition
     int[] primes = { 2, 3, 5, 7, 11, 13, 17 };
-    int numPrimes = inputLen - 3;
 
-    List<String>[] validSubs = getValidSubs(input, primes, numPrimes);
+    List<Integer>[] validParts = getValidParts(nums, primes);
 
     // Build Valid Strings
-    List<String> validStrings = getValidStrings(validSubs, input);
+    List<Integer> validNums = getValidFull(validParts, nums);
 
     // Output
     long sum = 0;
-    for (String str : validStrings) {
-      System.out.println(str);
-      sum += Long.parseLong(str);
+    for (int num : validNums) {
+      System.out.println(num);
+      sum += num;
     }
 
     System.out.println(new StringBuilder().append("Sum: ").append(sum));
     System.out.printf("Elapsed time: %.6f ms\n", (System.nanoTime() - start) / 1e6);
   }
 
-  private static List<String>[] getValidSubs(String input, int[] primes, int numPrimes) {
-    int inputLen = input.length();
+  private static int concatInt(int... nums) {
+    if (nums.length > 1) {
+      return nums[0] * ((int) Math.pow(10, nums.length - 1)) + concatInt(Arrays.copyOfRange(nums, 1, nums.length));
+    } else {
+      return nums[0];
+    }
+  }
+
+  // private static int subInt(int num, int start, int end) {
+
+  // }
+
+  private static int getDigit(int num, int place) {
+    return (num % ((int) Math.pow(10, place))) / ((int) Math.pow(10, place - 1));
+  }
+
+  private static boolean containsDigit(int num, int digit) {
+    while (num > 0) {
+      if (getDigit(num, 1) == digit) {
+        return true;
+      }
+
+      num /= 10;
+    }
+
+    return false;
+  }
+
+  private static int[] parseInput(String input) {
+    char[] chars = input.toCharArray();
+    int[] nums = new int[chars.length];
+
+    for (int i = nums.length - 1; i >= 0; i--) {
+      nums[i] = chars[i] - '0';
+    }
+
+    return nums;
+  }
+
+  private static List<Integer>[] getValidParts(int[] nums, int[] primes) {
+    int numPrimes = nums.length - 3;
 
     // Find each permutation of 3 digits
-    int num3Subs = (inputLen) * (inputLen - 1) * (inputLen - 2);
+    int num3Subs = (nums.length) * (nums.length - 1) * (nums.length - 2);
     int index = 0;
     int[] len3Subs = new int[num3Subs];
 
-    for (int i = inputLen - 1; i >= 0; i--) {
-      for (int j = inputLen - 1; j >= 0; j--) {
-        for (int k = inputLen - 1; k >= 0; k--) {
+    for (int i = nums.length - 1; i >= 0; i--) {
+      for (int j = nums.length - 1; j >= 0; j--) {
+        for (int k = nums.length - 1; k >= 0; k--) {
           if (i != j && i != k && j != k) {
-            String subStr = new StringBuilder().append(input.charAt(i)).append(input.charAt(j)).append(input.charAt(k))
-                .toString();
-
-            len3Subs[index] = Integer.parseInt(subStr);
+            len3Subs[index] = concatInt(i, j, k);
             index++;
           }
         }
@@ -59,78 +93,65 @@ public class SubstringDivisibility {
     }
 
     // Find all permutations that are valid for each condition
-    List<String>[] validSubs = new ArrayList[numPrimes];
+    List<Integer>[] validNums = new ArrayList[numPrimes];
     for (int i = numPrimes - 1; i >= 0; i--) {
-      validSubs[i] = new ArrayList<String>();
+      validNums[i] = new ArrayList<Integer>();
     }
 
-    for (index = num3Subs - 1; index >= 0; index--) {
+    for (index--; index >= 0; index--) {
       int num = len3Subs[index];
 
       for (int i = numPrimes - 1; i >= 0; i--) {
         if (num % primes[i] == 0) {
-          StringBuilder numBuild = new StringBuilder();
-
-          if (num < 100) {
-            numBuild.append('0');
-          }
-          numBuild.append(num);
-
-          validSubs[i].add(numBuild.toString());
+          validNums[i].add(num);
         }
       }
     }
 
-    return validSubs;
+    return validNums;
   }
 
-  private static List<String> getValidStrings(List<String>[] validSubs, String input) {
-    return completeSubStr("", validSubs, 0, input);
+  private static List<Integer> getValidFull(List<Integer>[] validParts, int[] nums) {
+    return completeNum(0, validParts, 0, nums);
   }
 
-  private static List<String> completeSubStr(String str, List<String>[] subs, int index, String input) {
-    List<String> possibleStrings = new ArrayList<String>();
+  private static List<Integer> completeNum(int num, List<Integer>[] parts, int index, int[] nums) {
+    List<Integer> possibleNums = new ArrayList<Integer>();
 
-    if (index < subs.length) {
-      int len = subs[index].size();
-
-      for (int i = 0; i < len; i++) {
-        String next = subs[index].get(i);
-
-        if (validNext(str, next)) {
-          possibleStrings.addAll(
-              completeSubStr(new StringBuilder().append(str).append(str.isEmpty() ? next : next.charAt(2)).toString(),
-                  subs, index + 1, input));
+    if (index < parts.length) {
+      for (int next : parts[index]) {
+        if (validNext(num, next)) {
+          possibleNums
+              .addAll(completeNum(concatInt(num, (num == 0) ? next : getDigit(next, 1)), parts, index + 1, nums));
         }
       }
     } else {
-      possibleStrings.add(addMissingDigit(str, input));
+      possibleNums.add(addMissingDigit(num, nums));
     }
 
-    return possibleStrings;
+    return possibleNums;
   }
 
-  public static boolean validNext(String str, String next) {
-    return str.isEmpty() || str.indexOf(next.charAt(2)) == -1 && str.indexOf(next.substring(0, 2)) == str.length() - 2;
+  private static boolean validNext(int num, int next) {
+    return num == 0 || containsDigit(num, getDigit(next, 1)) && getDigit(num, 1) == getDigit(next, 2)
+        && getDigit(num, 2) == getDigit(next, 3);
   }
 
-  public static String addMissingDigit(String str, String input) {
-    int strlen = str.length();
-    int inputlen = input.length();
-
-    for (int i = 0; i < inputlen; i++) {
+  private static int addMissingDigit(int num, int[] nums) {
+    for (int i = 0; i < nums.length; i++) {
+      int numDigits = (int) Math.log(num) + 1;
       int j;
-      for (j = 0; j < strlen; j++) {
-        if (input.charAt(i) == str.charAt(j)) {
+      for (j = 1; j <= numDigits; j++) {
+        if (nums[i] == getDigit(num, j)) {
           break;
         }
       }
 
-      if (j == strlen) {
-        return new StringBuilder().append(input.charAt(i)).append(str).toString();
+      if (j == numDigits) {
+        return concatInt(nums[i], num);
       }
     }
 
-    return str;
+    return num;
   }
 }
