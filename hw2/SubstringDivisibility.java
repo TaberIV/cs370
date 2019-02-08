@@ -10,27 +10,18 @@ import java.lang.StringBuilder;
 
 public class SubstringDivisibility {
   public static void main(String[] args) {
+    long start = System.nanoTime();
+
     // Handle nput
     String input = args[0];
     int inputLen = input.length();
 
-    long start = System.nanoTime();
 
-    // Find valid permutations
+    // Find valid substrings for each condition
     int[] primes = { 2, 3, 5, 7, 11, 13, 17 };
     int numPrimes = inputLen - 3;
 
     List<String>[] validSubs = getValidSubs(input, primes, numPrimes);
-
-    // * DEBUG
-    // // Check what is in each ArrayList
-    // for (int i = 0; i < numPrimes; i++) {
-    //   System.out.println("\nMultiples of " + primes[i] + ":");
-
-    //   for (String sub : validSubs[i]) {
-    //     System.out.println(sub);
-    //   }
-    // }
 
     // Build Valid Strings
     List<String> validStrings = getValidStrings(validSubs, input);
@@ -42,7 +33,7 @@ public class SubstringDivisibility {
       sum += Long.parseLong(str);
     }
 
-    System.out.printf("Sum: %d\n", sum);
+    System.out.println(new StringBuilder().append("Sum: ").append(sum));
     System.out.printf("Elapsed time: %.6f ms\n", (System.nanoTime() - start) / 1e6);
   }
 
