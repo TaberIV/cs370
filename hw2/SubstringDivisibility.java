@@ -19,6 +19,7 @@ public class SubstringDivisibility {
 
     // Build Valid numbers
     List<int[]> validNums = getValidNums(nums);
+    validNums.sort((num1, num2) -> concatInt(num1) - concatInt(num2));
 
     // Output
     long sum = 0;
@@ -52,8 +53,6 @@ public class SubstringDivisibility {
       nums[i] = chars[i] - '0';
     }
 
-    Arrays.sort(nums);
-
     return nums;
   }
 
@@ -65,18 +64,15 @@ public class SubstringDivisibility {
     List<int[]> possibleNums = new ArrayList<int[]>();
 
     if (index < nums.length) {
-      for (int num : nums) {
-        if (validNext(digits, num, index)) {
+      for (int i = 0; i < nums.length; i++) {
+        if (nums[i] >= 0 && validNext(digits, nums[i], index)) {
           int[] newDigits = digits.clone();
-          newDigits[index] = num;
-          
-          // System.out.printf("Added %d at index %d to ", num, index);
-          // for (int i = 0; i <= index; i++) {
-          //   System.out.print(newDigits[i]);
-          // }
-          // System.out.println();
+          newDigits[index] = nums[i];
 
-          possibleNums.addAll(completeNum(newDigits, nums, index + 1));
+          int[] newNums = nums.clone();
+          newNums[i] = -1;
+
+          possibleNums.addAll(completeNum(newDigits, newNums, index + 1));
         }
       }
     } else {
@@ -107,16 +103,7 @@ public class SubstringDivisibility {
 
   private static int[] addMissingDigit(int[] digits, int[] nums) {
     for (int num : nums) {
-      boolean found = false;
-
-      for (int digit : digits) {
-        if (num == digit) {
-          found = true;
-          break;
-        }
-      }
-
-      if (!found) {
+      if (num >= 0) {
         digits[0] = num;
         break;
       }
