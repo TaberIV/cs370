@@ -20,6 +20,15 @@ public class SubstringDivisibility {
 
     List<Integer>[] validParts = getValidParts(nums, primes);
 
+    // *DEBUG
+    // for (int i = 0; i < nums.length - 3; i++) {
+    //   System.out.printf("Multiples of: %d\n", primes[i]);
+    //   for (int subi : validParts[i]) {
+    //     System.out.println(subi);
+    //   }
+    // }
+    // System.out.println();
+
     // Build Valid Strings
     List<Integer> validNums = getValidFull(validParts, nums);
 
@@ -85,7 +94,7 @@ public class SubstringDivisibility {
       for (int j = nums.length - 1; j >= 0; j--) {
         for (int k = nums.length - 1; k >= 0; k--) {
           if (i != j && i != k && j != k) {
-            len3Subs[index] = concatInt(i, j, k);
+            len3Subs[index] = concatInt(nums[i], nums[j], nums[k]);
             index++;
           }
         }
