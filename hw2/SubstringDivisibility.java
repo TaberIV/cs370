@@ -12,7 +12,7 @@ public class SubstringDivisibility {
   public static void main(String[] args) {
     long start = System.nanoTime();
 
-    // Handle nput
+    // Handle input
     String input = args[0];
     int inputLen = input.length();
 
@@ -98,9 +98,8 @@ public class SubstringDivisibility {
         String next = subs[index].get(i);
 
         if (validNext(str, next)) {
-          possibleStrings.addAll(
-              completeSubStr(new StringBuilder().append(str).append(str.isEmpty() ? next : next.charAt(2)).toString(),
-                  subs, index + 1, input));
+          String built = new StringBuilder().append(str).append(str.isEmpty() ? next : next.charAt(2)).toString();
+          possibleStrings.addAll(completeSubStr(built, subs, index + 1, input));
         }
       }
     } else {
