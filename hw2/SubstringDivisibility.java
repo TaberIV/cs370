@@ -17,9 +17,10 @@ public class SubstringDivisibility {
 
     long start = System.nanoTime();
 
+    Arrays.sort(nums);
+
     // Build Valid numbers
     List<int[]> validNums = getValidNums(nums);
-    validNums.sort((num1, num2) -> concatInt(num1) - concatInt(num2));
 
     // Output
     long sum = 0;
@@ -57,7 +58,7 @@ public class SubstringDivisibility {
   }
 
   private static List<int[]> getValidNums(int[] nums) {
-    return completeNum(new int[nums.length], nums, 1);
+    return completeNum(new int[nums.length], nums, 0);
   }
 
   private static List<int[]> completeNum(int[] digits, int[] nums, int index) {
@@ -76,7 +77,6 @@ public class SubstringDivisibility {
         }
       }
     } else {
-      addMissingDigit(digits, nums);
       possibleNums.add(digits);
     }
 
@@ -84,13 +84,6 @@ public class SubstringDivisibility {
   }
 
   private static boolean validNext(int[] digits, int next, int index) {
-    // Check for uniqueness
-    for (int i = 1; i < index; i++) {
-      if (digits[i] == next) {
-        return false;
-      }
-    }
-
     // Check for prime conditions
     boolean primeMult = index < 3;
     if (!primeMult) {
@@ -99,16 +92,5 @@ public class SubstringDivisibility {
     }
 
     return primeMult;
-  }
-
-  private static int[] addMissingDigit(int[] digits, int[] nums) {
-    for (int num : nums) {
-      if (num >= 0) {
-        digits[0] = num;
-        break;
-      }
-    }
-
-    return digits;
   }
 }
