@@ -1,6 +1,6 @@
 
 /**
- * Authors: Taber McFarlin, Chris Byrne, and Luke Lopouski
+ * Authors: Taber McFarlin, Chris Byrne, and Luke Loposky
  * We pledge our honor that we have abided by the Stevens Honor System
  */
 
