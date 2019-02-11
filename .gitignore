@@ -6,3 +6,6 @@ ClassExercises/
 
 # Editor files
 .vscode/
+
+# Submissions
+*.zip
