@@ -90,6 +90,8 @@ int main(int argc, char *argv[])
     cout << sum[i];
   }
 
+  cout << "\n";
+
   // Close file and cleanup
   inFile.close();
 
