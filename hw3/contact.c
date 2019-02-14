@@ -10,6 +10,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
+#include <stdbool.h>
 
 #define ALPHABET_LENGTH 26
 #define OPERATION_BUF_SIZE 7 /* Large enough to cover the word 'search' and '\0' */
@@ -91,8 +92,25 @@ int find(char partial[], int index, trie_node *trie)
   }
 }
 
-int search(char name[], int index, trie_node *trie)
+bool search(char name[], int index, trie_node *trie)
 {
+  if (name[index] == '\0')
+  {
+    return trie->children[ALPHABET_LENGTH] != NULL;
+  }
+  else
+  {
+    int child = name[index] - 'a';
+
+    if (trie->children[child] == NULL)
+    {
+      return false;
+    }
+    else
+    {
+      return find(name, index + 1, trie->children[child]);
+    }
+  }
 
   return 1;
 }
