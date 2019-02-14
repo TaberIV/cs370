@@ -29,6 +29,8 @@ trie_node *new_trie()
   return trie;
 }
 
+
+
 int add(char name[], int index, trie_node *trie)
 {
   trie->num_children += 1;
@@ -85,7 +87,8 @@ int main()
 
   trie_node *trie = new_trie();
 
-  int n = getchar() - '0';
+  int n;
+  scanf("%d", &n);
 
   while (n > 0)
   {
@@ -110,6 +113,8 @@ int main()
 
     n--;
   }
+
+  free(trie);
 
   return 1;
 }
