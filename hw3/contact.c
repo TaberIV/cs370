@@ -12,9 +12,9 @@
 #include <stdbool.h>
 #include <string.h>
 
-#define ALPHABET_LENGTH 26
-#define OPERATION_BUF_SIZE 7 /* Large enough to cover the word 'search' and '\0' */
-#define NAME_BUF_SIZE 22
+#define ALPHABET_LENGTH    26
+#define OPERATION_BUF_SIZE  7 /* Large enough to cover the word 'search' and '\0' */
+#define NAME_BUF_SIZE      22
 
 typedef struct node
 {
