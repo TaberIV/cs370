@@ -12,9 +12,9 @@
 #include <stdbool.h>
 #include <string.h>
 
-#define ALPHABET_LENGTH    26
-#define OPERATION_BUF_SIZE  7 /* Large enough to cover the word 'search' and '\0' */
-#define NAME_BUF_SIZE      22
+#define ALPHABET_LENGTH 26
+#define OPERATION_BUF_SIZE 7 /* Large enough to cover the word 'search' and '\0' */
+#define NAME_BUF_SIZE 22
 
 typedef struct node
 {
@@ -22,14 +22,32 @@ typedef struct node
   struct node *children[ALPHABET_LENGTH + 1];
 } trie_node;
 
-trie_node *new_trie()
+trie_node *trie_new()
 {
   trie_node *trie = malloc(sizeof(trie_node));
+
+  trie->num_children = 0;
+  
+  for (int i = 0; i <= ALPHABET_LENGTH; i++)
+  {
+    trie->children[i] = NULL;
+  }
 
   return trie;
 }
 
+void trie_free(trie_node *trie)
+{
+  for (int i = 0; i <= ALPHABET_LENGTH; i++)
+  {
+    if (trie->children[i] != NULL)
+    {
+      trie_free(trie->children[i]);
+    }
+  }
 
+  free(trie);
+}
 
 int add(char name[], int index, trie_node *trie)
 {
@@ -37,7 +55,7 @@ int add(char name[], int index, trie_node *trie)
 
   if (name[index] == '\0')
   {
-    trie->children[ALPHABET_LENGTH] = new_trie();
+    trie->children[ALPHABET_LENGTH] = trie_new();
     return 1;
   }
   else
@@ -46,7 +64,7 @@ int add(char name[], int index, trie_node *trie)
 
     if (trie->children[child] == 0)
     {
-      trie->children[child] = new_trie();
+      trie->children[child] = trie_new();
     }
 
     return add(name, index + 1, trie->children[child]);
@@ -63,7 +81,7 @@ int find(char partial[], int index, trie_node *trie)
   {
     int child = partial[index] - 'a';
 
-    if (trie->children[child] == 0)
+    if (trie->children[child] == NULL)
     {
       return 0;
     }
@@ -85,7 +103,7 @@ int main()
   char operation[OPERATION_BUF_SIZE];
   char arg[NAME_BUF_SIZE];
 
-  trie_node *trie = new_trie();
+  trie_node *trie = trie_new();
 
   int n;
   scanf("%d", &n);
@@ -100,7 +118,8 @@ int main()
     }
     else if (strcmp(operation, "find") == 0)
     {
-      printf("%d\n", find(arg, 0, trie));
+      int found = find(arg, 0, trie);
+      printf("%d\n", found);
     }
     else if (strcmp(operation, "search") == 0)
     {
@@ -114,7 +133,7 @@ int main()
     n--;
   }
 
-  free(trie);
+  trie_free(trie);
 
   return 1;
 }
