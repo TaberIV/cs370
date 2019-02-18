@@ -51,6 +51,7 @@ void trie_free(trie_node *trie)
 }
 
 // Trie operations
+// Add name to trie
 int add(char name[], int index, trie_node *trie)
 {
   trie->num_children += 1;
@@ -64,7 +65,7 @@ int add(char name[], int index, trie_node *trie)
   {
     int child = name[index] - 'a';
 
-    if (trie->children[child] == 0)
+    if (trie->children[child] == NULL)
     {
       trie->children[child] = trie_new();
     }
@@ -73,6 +74,7 @@ int add(char name[], int index, trie_node *trie)
   }
 }
 
+// Find number of names that begin with the partial entry
 int find(char partial[], int index, trie_node *trie)
 {
   if (partial[index] == '\0')
@@ -94,6 +96,7 @@ int find(char partial[], int index, trie_node *trie)
   }
 }
 
+// Find if exact name has been added
 bool search(char name[], int index, trie_node *trie)
 {
   if (name[index] == '\0')
