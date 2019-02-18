@@ -16,6 +16,7 @@
 #define OPERATION_BUF_SIZE 7 /* Large enough to cover the word 'search' and '\0' */
 #define NAME_BUF_SIZE 22
 
+// Define trie
 typedef struct node
 {
   int num_children;
@@ -49,6 +50,7 @@ void trie_free(trie_node *trie)
   free(trie);
 }
 
+// Trie operations
 int add(char name[], int index, trie_node *trie)
 {
   trie->num_children += 1;
@@ -115,13 +117,15 @@ bool search(char name[], int index, trie_node *trie)
   return 1;
 }
 
+// main
 int main()
 {
-  char operation[OPERATION_BUF_SIZE];
-  char arg[NAME_BUF_SIZE];
-
+  // Create trie
   trie_node *trie = trie_new();
 
+  // Process input
+  char operation[OPERATION_BUF_SIZE];
+  char arg[NAME_BUF_SIZE];
   int n;
   scanf("%d", &n);
 
@@ -140,7 +144,8 @@ int main()
     }
     else if (strcmp(operation, "search") == 0)
     {
-      printf(search(arg, 0, trie) ? "yes\n" : "no\n");
+      bool found = search(arg, 0, trie);
+      printf(found ? "yes\n" : "no\n");
     }
     else
     {
@@ -150,6 +155,7 @@ int main()
     n--;
   }
 
+  // Free data structures
   trie_free(trie);
 
   return 1;
