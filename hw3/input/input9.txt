@@ -1,0 +1,6 @@
+5
+add superhero
+find super    
+find hero
+search hero
+search superhero

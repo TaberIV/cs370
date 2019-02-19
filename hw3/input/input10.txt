@@ -1,0 +1,11 @@
+10
+add x
+add xa
+add xaa
+add xab
+add yx
+find x
+find xa
+find xab
+search x
+search y
