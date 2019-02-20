@@ -23,6 +23,7 @@ typedef struct node
   struct node *children[ALPHABET_LENGTH + 1];
 } trie_node;
 
+//creates a new trie
 trie_node *trie_new()
 {
   trie_node *trie = malloc(sizeof(trie_node));
@@ -37,6 +38,7 @@ trie_node *trie_new()
   return trie;
 }
 
+//frees the trie from memory
 void trie_free(trie_node *trie)
 {
   for (int i = 0; i <= ALPHABET_LENGTH; i++)
@@ -64,7 +66,7 @@ int add(char name[], int index, trie_node *trie)
   else
   {
     int child = name[index] - 'a';
-
+    //creates a new trie if there does not exist a child at the index
     if (trie->children[child] == NULL)
     {
       trie->children[child] = trie_new();
@@ -84,7 +86,7 @@ int find(char partial[], int index, trie_node *trie)
   else
   {
     int child = partial[index] - 'a';
-
+    //Checks if the letter at the current index is correct
     if (trie->children[child] == NULL)
     {
       return 0;
@@ -105,6 +107,7 @@ bool search(char name[], int index, trie_node *trie)
   }
   else
   {
+    // Checks if the letter at the current index is correct
     int child = name[index] - 'a';
 
     if (trie->children[child] == NULL)
@@ -113,7 +116,7 @@ bool search(char name[], int index, trie_node *trie)
     }
     else
     {
-      return find(name, index + 1, trie->children[child]);
+      return search(name, index + 1, trie->children[child]);
     }
   }
 
