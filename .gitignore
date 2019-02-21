@@ -3,6 +3,7 @@
 # Compiled files
 *.out
 *.class
+hw4/hashit
 
 # Editor files
 .vscode/
