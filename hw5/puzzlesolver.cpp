@@ -1,7 +1,7 @@
+#include "piece.cpp"
 #include <fstream>
 #include <iostream>
-#include <sstream>
-#include "piece.cpp"
+#include <vector>
 
 using namespace std;
 
@@ -22,39 +22,24 @@ int main(int argc, const char *argv[]) {
     return 1;
   }
 
-  // Get all pieces
-  Piece pieces[9];
-
   // Add read errors to the list of exceptions the ifstream will handle.
   input_file.exceptions(ifstream::badbit);
+
+  vector<piece> pieces;
   try {
     // Read pieces
-    string line;
+    string edges;
     unsigned int line_number = 1;
-    while (getline(input_file, line)) {
-      cout << line_number << ". <";
+    while (getline(input_file, edges)) {
+      piece p = piece(edges);
+      pieces.push_back(p);
 
-      // Read edges
-      string edge;
-      istringstream piece(line);
-      unsigned int edge_number = 0;
-      while (getline(piece, edge, ',')) {
-        Edge e = {edge[0], edge[1] - '0'};
-        pieces[line_number - 1].edges[edge_number] = e;
-
-        // Print edge
-        cout << e.color << e.type;
-        if (edge_number < 3) {
-          cout << ", ";
-        }
-
-        ++edge_number;
-      }
-
-      cout << ">" << endl;
+      cout << line_number << ". ";
+      p.print();
+      
       ++line_number;
     }
-    cout << endl;
+
     input_file.close();
   } catch (const ifstream::failure &f) {
     cerr << "Error: An I/O error occurred reading '" << argv[1] << "'.";
