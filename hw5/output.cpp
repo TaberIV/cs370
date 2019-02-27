@@ -13,6 +13,8 @@ int tilenum = 1;
 const char* dub = "  ";
 const char* trip = "   ";
 
+int solutions = 0;
+
 void horizontal_bound_print() {
 
 	cout << hb;
@@ -21,6 +23,18 @@ void horizontal_bound_print() {
 
 int main(int argc, const char *argv[]) {
 
+	if (true) {
+		solutions++;
+	}
+
+	if (solutions == 0) {
+		cout << "No solutions found." << endl;
+	} else if (solutions == 1) {
+		cout << solutions << " unique solution found." << endl;
+	} else {
+		cout << solutions << " unique solutions found." << endl;
+	}
+	
 	for (int i = 0; i < 3; i++) {
 
 		horizontal_bound_print();
