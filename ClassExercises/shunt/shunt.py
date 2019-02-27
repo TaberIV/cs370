@@ -20,8 +20,7 @@ if __name__ == '__main__':
                     print(stack.pop(), end="")
                 stack.pop()
             elif op in operators:
-                while (not operand(op)) and (stack[len(stack) - 1] in operators) and
-                operators.index(op) < operators.index(stack[len(stack) - 1]):
+                while (not operand(op)) and (stack[len(stack) - 1] in operators) and operators.index(op) < operators.index(stack[len(stack) - 1]):
                     print(stack.pop(), end="")
                 stack.append(op)
         print()
