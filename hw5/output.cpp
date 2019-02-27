@@ -84,5 +84,6 @@ int main(int argc, const char *argv[]) {
 	}
 
     horizontal_bound_print();
+    cout << endl;
 
 }
