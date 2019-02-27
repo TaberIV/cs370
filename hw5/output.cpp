@@ -9,7 +9,7 @@ char solved2[4][3] = {"R0", "R1", "R2", "R3"};
 
 const char* hb = "+--------+--------+--------+\n";
 const char* p = "|";
-const char* tilenum = "1";
+int tilenum = 1;
 const char* dub = "  ";
 const char* trip = "   ";
 
