@@ -6,9 +6,6 @@ using namespace std;
 class puzzle {
 private:
   const char *hr = "+--------+--------+--------+\n";
-  const char *p = "|";
-  const char *dub = "  ";
-  const char *trip = "   ";
 
 public:
   piece pieces[3][3];
