@@ -1,4 +1,4 @@
-// #include "piece.cpp"
+#include "puzzlesolver.h"
 #include <iostream>
 
 using namespace std;
