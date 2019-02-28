@@ -7,15 +7,24 @@ typedef struct edge {
   char color;
   int type;
 
-  void print() {
-    cout << color << type;
-  }
+  void print() { cout << color << type; }
 } edge;
 
-typedef struct piece {
+class piece {
+public:
+  int num;
   edge edges[4];
 
-  piece(string edges_str) {
+  // Default constructor
+  piece() {
+    num = 0;
+    for (int i = 0; i < 4; i++) {
+      edges[i] = {0, 0};
+    }
+  }
+  // Edges string constructor
+  piece(int _num, string edges_str) {
+    num = _num;
     // Read edges
     string edge;
     istringstream piece(edges_str);
@@ -25,8 +34,17 @@ typedef struct piece {
       edge_number++;
     }
   }
+  // Edges array constructor
+  piece(int _num, edge _edges[]) {
+    num = _num;
+    for (int i = 0; i < 4; i++) {
+      edges[i] = _edges[i];
+    }
+  }
+  // Destructor
   ~piece() {}
 
+  // Print as line
   void print() {
     cout << "<";
     for (int i = 0; i < 4; i++) {
@@ -38,4 +56,4 @@ typedef struct piece {
     }
     cout << ">" << endl;
   }
-} piece;
+};

@@ -1,4 +1,5 @@
 #include "piece.cpp"
+#include "puzzle.cpp"
 #include <fstream>
 #include <iostream>
 #include <vector>
@@ -25,18 +26,14 @@ int main(int argc, const char *argv[]) {
   // Add read errors to the list of exceptions the ifstream will handle.
   input_file.exceptions(ifstream::badbit);
 
-  vector<piece> pieces;
+  piece pieces[9];
   try {
     // Read pieces
     string edges;
     unsigned int line_number = 1;
     while (getline(input_file, edges)) {
-      piece p = piece(edges);
-      pieces.push_back(p);
-
-      cout << line_number << ". ";
-      p.print();
-      
+      piece p = piece(line_number, edges);
+      pieces[line_number - 1] = p;
       ++line_number;
     }
 
@@ -47,6 +44,14 @@ int main(int argc, const char *argv[]) {
   }
 
   // Find valid solutions
+  for (piece p : pieces) {
+    cout << p.num << ". ";
+    p.print();
+  }
+  cout << endl;
+
+  puzzle puzz = puzzle(pieces);
+  puzz.print();
 
   return 0;
 }
