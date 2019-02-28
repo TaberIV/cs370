@@ -44,6 +44,30 @@ public:
   // Destructor
   ~piece() {}
 
+  piece rotateL() {
+    edge edges_rot[4];
+    edge temp = edges[0];
+
+    for (int i = 0; i < 3; i++) {
+      edges_rot[i] = edges[i + 1];
+    }
+    edges_rot[3] = temp;
+
+    return piece(num, edges_rot);
+  }
+
+  piece rotateR() {
+    edge edges_rot[4];
+    edge temp = edges[3];
+
+    for (int i = 1; i < 3; i++) {
+      edges_rot[i] = edges[i - 1];
+    }
+    edges_rot[0] = temp;
+
+    return piece(num, edges_rot);
+  }
+
   // Print as line
   void print() {
     cout << "<";
