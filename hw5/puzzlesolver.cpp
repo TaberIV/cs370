@@ -1,5 +1,4 @@
-#include "piece.cpp"
-#include "puzzle.cpp"
+#include "puzzlesolver.h"
 #include <fstream>
 #include <iostream>
 #include <vector>
