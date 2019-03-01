@@ -42,7 +42,8 @@ int main(int argc, const char *argv[]) {
     return 1;
   }
 
-  // Find valid solutions
+  // Print input
+  printf("Input tiles: \n");
   for (piece p : pieces) {
     cout << p.num << ". ";
     p.print();
@@ -50,7 +51,6 @@ int main(int argc, const char *argv[]) {
   cout << endl;
 
   puzzle puzz = puzzle(pieces);
-  puzz.print();
 
   return 0;
 }
