@@ -7,7 +7,10 @@ typedef struct edge {
   char color;
   int type;
 
-  void print() { cout << color << type; }
+  friend ostream &operator<<(ostream &output, const edge &e) { 
+    output << e.color << e.type;
+    return output;            
+  }
 } edge;
 
 class piece {
@@ -68,16 +71,12 @@ public:
     return piece(num, edges_rot);
   }
 
-  // Print as line
-  void print() {
-    cout << "<";
-    for (int i = 0; i < 4; i++) {
-      edges[i].print();
-
-      if (i < 3) {
-        cout << ", ";
-      }
+  friend ostream &operator<<(ostream &output, const piece &p) { 
+    output << p.num << ". <" << p.edges[0];
+    for (int i = 1; i < 4; i++) {
+      output << ", " << p.edges[i];
     }
-    cout << ">" << endl;
+    output << ">" << "\n";
+    return output;            
   }
 };

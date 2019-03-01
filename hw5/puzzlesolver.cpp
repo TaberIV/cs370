@@ -18,7 +18,7 @@ int main(int argc, const char *argv[]) {
 
   // Check file exists
   if (!input_file) {
-    cerr << "Error: Cannot open file '" << filename << "'." << endl;
+    cerr << "Error: Cannot open file '" << filename << "'." << "\n";
     return 1;
   }
 
@@ -43,14 +43,35 @@ int main(int argc, const char *argv[]) {
   }
 
   // Print input
-  printf("Input tiles: \n");
+  cout << "Input tiles:" << "\n";
   for (piece p : pieces) {
-    cout << p.num << ". ";
-    p.print();
+    cout << p;
   }
-  cout << endl;
+  cout << "\n";
 
+  // Find Solutions
   puzzle puzz = puzzle(pieces);
+  vector<puzzle> solutions = puzzle::solve(puzz);
+
+  // Output solutions
+  int num_solitions = solutions.size();
+
+  if (num_solitions == 0) {
+    cout << "No";
+  } else {
+    cout << num_solitions << " unique";
+  }
+  cout << " solution";
+
+  if (num_solitions > 1) {
+    cout << "s";
+  }
+
+  cout << " found.";
+
+  for (puzzle solution : solutions) {
+    cout << "\n" << solution;
+  }
 
   return 0;
 }

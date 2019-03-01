@@ -1,13 +1,22 @@
 #include "puzzlesolver.h"
 #include <iostream>
+#include <vector>
 
 using namespace std;
 
 class puzzle {
 private:
-  const char *hr = "+--------+--------+--------+\n";
+  inline static const string hr = "+--------+--------+--------+\n";
 
 public:
+  static vector<puzzle> solve(puzzle puzz) {
+    vector<puzzle> solutions;
+    solutions.push_back(puzz);
+    solutions.push_back(puzz);
+
+    return solutions;
+  }
+
   piece pieces[3][3];
 
   puzzle(piece _pieces[]) {
@@ -19,39 +28,37 @@ public:
   }
   ~puzzle() {}
 
-  void print() {
+  friend ostream &operator<<(ostream &output, const puzzle &u) {
     for (int r = 0; r < 3; r++) {
-      cout << hr;
+      output << hr;
       for (int e = 0; e < 4; e++) {
         if (e == 2) {
           continue;
         }
 
-        cout << "|";
+        output << "|";
         for (int p = 0; p < 3; p++) {
           // Print edges 0 and 3
           if (e == 0 || e == 3) {
             if (e == 0) {
-              cout << pieces[r][p].num << "  ";
+              output << u.pieces[r][p].num << "  ";
             } else {
-              cout << "   ";
+              output << "   ";
             }
 
-            pieces[r][p].edges[e].print();
-            cout << "   ";
-            cout << "|";
+            output << u.pieces[r][p].edges[e] << "   "
+                   << "|";
           } else {
             // Print edges 1 and 2
-            pieces[r][p].edges[e].print();
-            cout << "    ";
-            pieces[r][p].edges[e + 1].print();
-            cout << "|";
+            output << u.pieces[r][p].edges[e] << "    "
+                   << u.pieces[r][p].edges[e + 1] << "|";
           }
         }
-        cout << endl;
+        output << "\n";
       }
     }
 
-    cout << hr;
+    output << hr;
+    return output;
   }
 };
