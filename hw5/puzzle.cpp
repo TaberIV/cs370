@@ -38,6 +38,20 @@ private:
     return solutions;
   }
 
+  int rotate_index(int i, int r) {
+    if (r == 0) {
+      return i;
+    } else {
+      if (i < 3) {
+        return rotate_index(2 + 3 * i, r - 1);
+      } else if (i < 6) {
+        return rotate_index(i == 3 ? 1 : 7, r - 1);
+      } else {
+        return rotate_index((i - 6) * 3, r - 1);
+      }
+    }
+  }
+
 public:
   static vector<puzzle> solve(piece _pieces[]) {
     // Create array of pieces in all rotations
@@ -94,6 +108,37 @@ public:
 
     // If no bad cases return true
     return true;
+  }
+
+  bool operator==(const puzzle &puzz) {
+    if (pieces[4].num != puzz.pieces[4].num) {
+      return false;
+    }
+
+    // Check each rotation
+    for (int r = 0; r < 4; r++) {
+      bool equal = true;
+
+      // Check each piece
+      for (int p = 0; p < 9; p++) {
+        if (p == 4) {
+          continue;
+        }
+
+        int index = puzzle::rotate_index(p, r);
+
+        if (pieces[index].num != puzz.pieces[p].num) {
+          equal = false;
+          break;
+        }
+      }
+
+      if (equal) {
+        return true;
+      }
+    }
+
+    return false;
   }
 
   friend ostream &operator<<(ostream &output, const puzzle &u) {
