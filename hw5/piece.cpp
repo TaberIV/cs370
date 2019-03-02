@@ -7,11 +7,13 @@ typedef struct edge {
   char color;
   int type;
 
-  friend ostream &operator<<(ostream &output, const edge &e) { 
+  friend ostream &operator<<(ostream &output, const edge &e) {
     output << e.color << e.type;
-    return output;            
+    return output;
   }
 } edge;
+
+bool complements(edge e1, edge e2) { return e1.color == e2.color && e1.type != e2.type; }
 
 class piece {
 public:
@@ -47,36 +49,26 @@ public:
   // Destructor
   ~piece() {}
 
-  piece rotateL() {
-    edge edges_rot[4];
-    edge temp = edges[0];
-
-    for (int i = 0; i < 3; i++) {
-      edges_rot[i] = edges[i + 1];
-    }
-    edges_rot[3] = temp;
-
-    return piece(num, edges_rot);
-  }
-
-  piece rotateR() {
+  piece rotate() {
     edge edges_rot[4];
     edge temp = edges[3];
 
-    for (int i = 1; i < 3; i++) {
+    for (int i = 1; i < 4; i++) {
       edges_rot[i] = edges[i - 1];
     }
     edges_rot[0] = temp;
 
-    return piece(num, edges_rot);
+    piece newP = piece(num, edges_rot);
+    return newP;
   }
 
-  friend ostream &operator<<(ostream &output, const piece &p) { 
+  friend ostream &operator<<(ostream &output, const piece &p) {
     output << p.num << ". <" << p.edges[0];
     for (int i = 1; i < 4; i++) {
       output << ", " << p.edges[i];
     }
-    output << ">" << "\n";
-    return output;            
+    output << ">"
+           << "\n";
+    return output;
   }
 };

@@ -50,20 +50,19 @@ int main(int argc, const char *argv[]) {
   cout << "\n";
 
   // Find Solutions
-  puzzle puzz = puzzle(pieces);
-  vector<puzzle> solutions = puzzle::solve(puzz);
+  vector<puzzle> solutions = puzzle::solve(pieces);
 
   // Output solutions
-  int num_solitions = solutions.size();
+  int num_solutions = solutions.size();
 
-  if (num_solitions == 0) {
+  if (num_solutions == 0) {
     cout << "No";
   } else {
-    cout << num_solitions << " unique";
+    cout << num_solutions << " unique";
   }
   cout << " solution";
 
-  if (num_solitions > 1) {
+  if (num_solutions > 1) {
     cout << "s";
   }
 
