@@ -11,20 +11,16 @@ using namespace std;
 
 unsigned long long substrings(string n) {
   int len = n.length();
-  cout << "len: " << len << endl;
-  unsigned long long *subsums[len];
-  unsigned long long sum = 0;
-
-  for (int i = 0; i < len; i++) {
-    // cout << "i: " << i << endl;
-    subsums[i] = new unsigned long long[len - i];
-    subsums[i][0] = n[i] - '0';
-    sum = (sum + subsums[i][0]) % MOD;
-    for (int j = 1; j + i < len; j++) {
-      // cout << "j: " << j << endl;
-      subsums[i][j] = (subsums[i][j - 1] * 10 + (n[i + j] - '0')) % MOD;
-      sum = (sum + subsums[i][j]) % MOD;
-    }
+  long subsums[len];
+  long sum = 0;
+  long places = 1;
+  
+  for (int i = len - 1; i >= 0; i--) {
+    // places has 1 in each place that the number will be found in,
+    // and it's multiplied by i + 1 as that's the number of times it
+    // will be found at each place
+    sum = (sum + (n[i] - '0') * places * (i + 1)) % MOD;
+    places = (places * 10 + 1) % MOD;
   }
 
   return sum;
