@@ -85,6 +85,13 @@ def minSumPath(grid, rows=0, cols=0):
 
 def main():
     # Parse Input
+
+     #if no args, usage
+     if (len(sys.argv) < 2) :
+        print("Usage: %s pathsumfourways.py inputmatrix" % sys.argv[0])
+        sys.exit()
+
+    #else keep going we have what we want
     filename = sys.argv[1]
 
     try:
