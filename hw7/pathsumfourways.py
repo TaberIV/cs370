@@ -74,7 +74,7 @@ def minSumPath(grid, rows=0, cols=0):
 
         # Backtrack path
         path = []
-        if v.x == cols - 1 and v.y == rows -1:
+        if v.x == cols - 1 and v.y == rows - 1:
             path.insert(0, v.value)
             while v.parent != None:
                 v = v.parent
@@ -86,12 +86,12 @@ def minSumPath(grid, rows=0, cols=0):
 def main():
     # Parse Input
 
-     #if no args, usage
-     if (len(sys.argv) < 2) :
-        print("Usage: %s pathsumfourways.py inputmatrix" % sys.argv[0])
+    # if no args, usage
+    if (len(sys.argv) < 2):
+        print("Usage: %s pathsumfourways <input file>" % "python3.7")
         sys.exit()
 
-    #else keep going we have what we want
+    # else keep going we have what we want
     filename = sys.argv[1]
 
     try:
