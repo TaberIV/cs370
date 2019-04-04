@@ -32,11 +32,11 @@ def getTrips(list1, list2):
                 matrix[i][j] = max(matrix[i - 1][j], matrix[i][j - 1])
 
     # Traverse matrix to find paths of maxLength
-    path_matrix = [[set() for i in range(width)] for j in range(height)]
+    path_matrix = [[None for i in range(width)] for j in range(height)]
     for i in range(height):
-        path_matrix[i][0].add('')
+        path_matrix[i][0] = set([''])
     for j in range(width):
-        path_matrix[0][j].add('')
+        path_matrix[0][j] = set([''])
 
     stack = []
     i = height - 1
@@ -67,8 +67,7 @@ def getTrips(list1, list2):
                 stack.append((i, j - 1))
         else:
             if path_matrix[i - 1][j] and path_matrix[i][j - 1]:
-                path_matrix[i][j] = path_matrix[i - 1][j].union(
-                    path_matrix[i][j - 1])
+                path_matrix[i][j] = path_matrix[i - 1][j] | path_matrix[i][j - 1]
             else:
                 stack.append((i - 1, j))
                 stack.append((i, j - 1))
