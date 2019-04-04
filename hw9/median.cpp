@@ -6,30 +6,71 @@ using namespace std;
  * Complete the runningMedian function below.
  */
 vector<double> runningMedian(vector<int> a) {
-  vector<double> medians;
-  priority_queue<double> lowHeap;
-  priority_queue < double, vector<double>, greater<double> highHeap;
-
   double median = 0;
-  int med1 = 0, med2 = 0;
+  vector<double> medians;
+  vector<int> mids;  // For when the median is the average of two elements
+
+  priority_queue<double> lowHeap;
+  priority_queue<double, vector<double>, greater<double>> highHeap;
 
   for (int val : a) {
-    (val > median ? highHeap : lowHeap).push(val);
+    if (mids.empty()) {  // val = a[0]
+      median = val;
+      mids.push_back(val);
+    } else {
+      if (mids.size() == 1) {
+        // Add second value to mids
+        int newMid;
 
-    if (highHeap.size() != lowHeap.size()) {
-      if (highHeap.size() > lowHeap.size()) {
-        med2 = highHeap.pop();
+        if (val <= median) {
+          lowHeap.push(val);
+
+          newMid = lowHeap.top();
+          mids.insert(mids.begin(), newMid);
+          lowHeap.pop();
+        } else {
+          highHeap.push(val);
+
+          newMid = highHeap.top();
+          mids.push_back(newMid);
+          highHeap.pop();
+        }
+
+        // Update median
+        median += newMid;
+        median /= 2;
       } else {
-        med1 = lowHeap.pop();
+        // Remove second value from mid
+        if (val <= mids[0]) {
+          lowHeap.push(val);
+
+          highHeap.push(mids[1]);
+          mids.pop_back();
+        } else if (val >= mids[1]) {
+          highHeap.push(val);
+
+          lowHeap.push(mids[0]);
+          mids.erase(mids.begin());
+        } else {
+          lowHeap.push(mids[0]);
+          highHeap.push(mids[1]);
+
+          mids.clear();
+          mids.push_back(val);
+        }
+
+        // Update median
+        median = mids[0];
       }
     }
 
-    medians.push(median);
+    medians.push_back(median);
   }
 
   return medians;
 }
 
+// HackerRank provided main
 int main() {
   ofstream fout(getenv("OUTPUT_PATH"));
 
