@@ -12,65 +12,43 @@ using namespace std;
  * Complete the runningMedian function below.
  */
 vector<double> runningMedian(vector<int> a) {
-  double median = 0;       // Current median
+  int median = -1;         // Current median
   vector<double> medians;  // Running median history
-  vector<int> mids;        // Up to two integers whose mean compose the median
 
   // These heaps hold elements on either side of the median
   priority_queue<double> lowHeap;                                    // < median
   priority_queue<double, vector<double>, greater<double>> highHeap;  // > median
 
-  // Process input
+  // Find median at each insertion
   for (int val : a) {
-    if (mids.empty()) {  // val = a[0]
-      median = val;
-      mids.push_back(val);
-    } else if (mids.size() == 1) {
-      // Add integer to mids
-      int newMid;
+    if (median == -1) {  // There is no middle number
+      if (lowHeap.empty() || val >= lowHeap.top() && val <= highHeap.top()) {
+        median = val;
+      } else if (val < lowHeap.top()) {
+        median = lowHeap.top();
+        lowHeap.pop();
+        lowHeap.push(val);
+      } else {
+        median = highHeap.top();
+        highHeap.pop();
+        highHeap.push(val);
+      }
 
+      // Add median
+      medians.push_back(median);
+    } else {
       if (val <= median) {
         lowHeap.push(val);
-
-        newMid = lowHeap.top();
-        mids.insert(mids.begin(), newMid);
-        lowHeap.pop();
+        highHeap.push(median);
       } else {
+        lowHeap.push(median);
         highHeap.push(val);
-
-        newMid = highHeap.top();
-        mids.push_back(newMid);
-        highHeap.pop();
       }
 
-      // Update median
-      median += newMid;
-      median /= 2;
-    } else {
-      // Set mid to hold only one value
-      if (val <= mids[0]) {
-        lowHeap.push(val);
-
-        highHeap.push(mids[1]);
-        mids.pop_back();
-      } else if (val >= mids[1]) {
-        highHeap.push(val);
-
-        lowHeap.push(mids[0]);
-        mids.erase(mids.begin());
-      } else {
-        lowHeap.push(mids[0]);
-        highHeap.push(mids[1]);
-
-        mids.clear();
-        mids.push_back(val);
-      }
-
-      // Update median
-      median = mids[0];
+      // Add median
+      median = -1;
+      medians.push_back((highHeap.top() + lowHeap.top()) / 2.0);
     }
-
-    medians.push_back(median);
   }
 
   return medians;
