@@ -1,3 +1,9 @@
+/*********************************************************************
+ * Authors: E. Taber McFarlin, Chris Byrne, and Luke L.
+ * We pledge our honor that we have abided by the Stevens Honor System
+ * https://www.hackerrank.com/challenges/find-the-running-median/problem
+ *********************************************************************/
+
 #include <bits/stdc++.h>
 
 using namespace std;
@@ -6,62 +12,61 @@ using namespace std;
  * Complete the runningMedian function below.
  */
 vector<double> runningMedian(vector<int> a) {
-  double median = 0;
-  vector<double> medians;
-  vector<int> mids;  // For when the median is the average of two elements
+  double median = 0;       // Current median
+  vector<double> medians;  // Running median history
 
-  priority_queue<double> lowHeap;
-  priority_queue<double, vector<double>, greater<double>> highHeap;
+  // These heaps hold elements on either side of the median
+  priority_queue<double> lowHeap;                                    // < median
+  priority_queue<double, vector<double>, greater<double>> highHeap;  // > median
 
+  // Process input
   for (int val : a) {
     if (mids.empty()) {  // val = a[0]
       median = val;
       mids.push_back(val);
-    } else {
-      if (mids.size() == 1) {
-        // Add second value to mids
-        int newMid;
+    } else if (mids.size() == 1) {
+      // Add integer to mids
+      int newMid;
 
-        if (val <= median) {
-          lowHeap.push(val);
+      if (val <= median) {
+        lowHeap.push(val);
 
-          newMid = lowHeap.top();
-          mids.insert(mids.begin(), newMid);
-          lowHeap.pop();
-        } else {
-          highHeap.push(val);
-
-          newMid = highHeap.top();
-          mids.push_back(newMid);
-          highHeap.pop();
-        }
-
-        // Update median
-        median += newMid;
-        median /= 2;
+        newMid = lowHeap.top();
+        mids.insert(mids.begin(), newMid);
+        lowHeap.pop();
       } else {
-        // Remove second value from mid
-        if (val <= mids[0]) {
-          lowHeap.push(val);
+        highHeap.push(val);
 
-          highHeap.push(mids[1]);
-          mids.pop_back();
-        } else if (val >= mids[1]) {
-          highHeap.push(val);
-
-          lowHeap.push(mids[0]);
-          mids.erase(mids.begin());
-        } else {
-          lowHeap.push(mids[0]);
-          highHeap.push(mids[1]);
-
-          mids.clear();
-          mids.push_back(val);
-        }
-
-        // Update median
-        median = mids[0];
+        newMid = highHeap.top();
+        mids.push_back(newMid);
+        highHeap.pop();
       }
+
+      // Update median
+      median += newMid;
+      median /= 2;
+    } else {
+      // Set mid to hold only one value
+      if (val <= mids[0]) {
+        lowHeap.push(val);
+
+        highHeap.push(mids[1]);
+        mids.pop_back();
+      } else if (val >= mids[1]) {
+        highHeap.push(val);
+
+        lowHeap.push(mids[0]);
+        mids.erase(mids.begin());
+      } else {
+        lowHeap.push(mids[0]);
+        highHeap.push(mids[1]);
+
+        mids.clear();
+        mids.push_back(val);
+      }
+
+      // Update median
+      median = mids[0];
     }
 
     medians.push_back(median);
