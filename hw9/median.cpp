@@ -1,8 +1,8 @@
-/*********************************************************************
+/*******************************************************************************
  * Authors: E. Taber McFarlin, Chris Byrne, and Luke L.
  * We pledge our honor that we have abided by the Stevens Honor System
  * https://www.hackerrank.com/challenges/find-the-running-median/problem
- *********************************************************************/
+ ******************************************************************************/
 
 #include <bits/stdc++.h>
 
