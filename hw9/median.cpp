@@ -14,6 +14,7 @@ using namespace std;
 vector<double> runningMedian(vector<int> a) {
   double median = 0;       // Current median
   vector<double> medians;  // Running median history
+  vector<int> mids;        // Up to two integers whose mean compose the median
 
   // These heaps hold elements on either side of the median
   priority_queue<double> lowHeap;                                    // < median
