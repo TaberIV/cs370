@@ -1,5 +1,6 @@
 import sys
 
+
 def main():
     # Input
     numNodes = int(input())
@@ -32,14 +33,18 @@ def main():
     for out in output:
         print(' '.join(out))
 
+
 def printTree(left, right, flipped, root=1, depth=1):
     if root < 0:
         return []
 
     if flipped[depth]:
-        return printTree(left, right, flipped, right[root], depth + 1) + [str(root)] + printTree(left, right, flipped, left[root], depth + 1)
+        return printTree(left, right, flipped, right[root], depth + 1) + [
+            str(root)] + printTree(left, right, flipped, left[root], depth + 1)
     else:
-        return printTree(left, right, flipped, left[root], depth + 1) + [str(root)] + printTree(left, right, flipped, right[root], depth + 1)
+        return printTree(left, right, flipped, left[root], depth + 1) + [
+            str(root)] + printTree(left, right, flipped, right[root], depth + 1)
+
 
 if __name__ == '__main__':
     sys.setrecursionlimit(10000)

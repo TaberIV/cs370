@@ -1,3 +1,9 @@
+/*******************************************************************************
+ * Authors: E. Taber McFarlin, Chris Byrne, and Luke L.
+ * We pledge our honor that we have abided by the Stevens Honor System
+ * https://www.hackerrank.com/challenges/find-the-running-median/problem
+ ******************************************************************************/
+
 #include <bits/stdc++.h>
 
 using namespace std;
@@ -6,30 +12,49 @@ using namespace std;
  * Complete the runningMedian function below.
  */
 vector<double> runningMedian(vector<int> a) {
-  vector<double> medians;
-  priority_queue<double> lowHeap;
-  priority_queue < double, vector<double>, greater<double> highHeap;
+  int median = -1;         // Current median
+  vector<double> medians;  // Running median history
 
-  double median = 0;
-  int med1 = 0, med2 = 0;
+  // These heaps hold elements on either side of the median
+  priority_queue<double> lowHeap;                                    // < median
+  priority_queue<double, vector<double>, greater<double>> highHeap;  // > median
 
+  // Find median at each insertion
   for (int val : a) {
-    (val > median ? highHeap : lowHeap).push(val);
-
-    if (highHeap.size() != lowHeap.size()) {
-      if (highHeap.size() > lowHeap.size()) {
-        med2 = highHeap.pop();
+    if (median == -1) {  // There is no middle number
+      if (lowHeap.empty() || val >= lowHeap.top() && val <= highHeap.top()) {
+        median = val;
+      } else if (val < lowHeap.top()) {
+        median = lowHeap.top();
+        lowHeap.pop();
+        lowHeap.push(val);
       } else {
-        med1 = lowHeap.pop();
+        median = highHeap.top();
+        highHeap.pop();
+        highHeap.push(val);
       }
-    }
 
-    medians.push(median);
+      // Add median
+      medians.push_back(median);
+    } else {
+      if (val <= median) {
+        lowHeap.push(val);
+        highHeap.push(median);
+      } else {
+        lowHeap.push(median);
+        highHeap.push(val);
+      }
+
+      // Add median
+      median = -1;
+      medians.push_back((highHeap.top() + lowHeap.top()) / 2.0);
+    }
   }
 
   return medians;
 }
 
+// HackerRank provided main
 int main() {
   ofstream fout(getenv("OUTPUT_PATH"));
 
