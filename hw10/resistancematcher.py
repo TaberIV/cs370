@@ -25,7 +25,7 @@ def main():
 
     try:
         tolerance = float(sys.argv[2])
-        assert tolerance >= 0 and tolerance <= 100
+        assert tolerance >= 0 and tolerance < 100
     except (ValueError, AssertionError) as e:
         print("Error: Invalid tolerance value '" + sys.argv[2] + "'.")
         return
@@ -72,12 +72,12 @@ def main():
     resistors = sorted(resistors)
     sol = Resistor.calc_resistors(target, tolerance, num_resistors, resistors)
 
-    if len(sol.resistorDict) > 0:
+    if len(sol.resistorList) > 0:
         print("Target resistance of " + str(target) +
-              " ohms is possible with " + str(sol.resistorDict.keys()) +
-              "ohm resistors.")
+              " ohms is possible with " + str(sorted(sol.resistorList)) +
+              " ohm resistors.")
         print("Best fit: " + str(sol.resistance) + " ohms")
-        print("Percent error: " + str(sol.percentError) + " %")
+        print("Percent error: " + str(sol.error) + " %")
     else:
         print("Target resistance of " + str(target) + " ohms is not possible.")
 
