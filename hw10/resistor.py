@@ -109,6 +109,11 @@ class Resistor:
                 if resList[-1] == resistor:
                     break
 
+        # Check if low resistor is better
+        currSol = Resistor([resistorList[0]], target)
+        if currSol.error <= bestSol.error:
+            bestSol = currSol
+
         if bestSol.error > tolerance:
             bestSol = Resistor([], target)
         return bestSol

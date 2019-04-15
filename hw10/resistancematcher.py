@@ -74,10 +74,10 @@ def main():
 
     if len(sol.resistorList) > 0:
         print("Target resistance of " + str(target) +
-              " ohms is possible with " + str(sorted(sol.resistorList)) +
+              " ohms is possible with " + str(sol.resistorList) +
               " ohm resistors.")
-        print("Best fit: " + str(sol.resistance) + " ohms")
-        print("Percent error: " + str(sol.error) + " %")
+        print("Best fit: {:0.5} ohms".format(sol.resistance))
+        print("Percent error: {:0.3} %".format(sol.error))
     else:
         print("Target resistance of " + str(target) + " ohms is not possible.")
 
