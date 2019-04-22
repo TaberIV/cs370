@@ -28,24 +28,32 @@ class ReciprocalCycles {
             return;
         }
 
+        // Hardcode 1 case
         if (num == 1) {
             System.out.println("1/1 = 1");
             return;
         }
 
-        // Find decimal
-        int[] rems = new int[num];
+        // Find position/length of loop
+        int[] remPlaces = new int[num];
         int rem = 1;
-        int place = 0;
+        int place = 1;
 
-        while (rems[rem] == 0 && rem != 0) {
-            rems[rem] = place;
+        while (remPlaces[rem] == 0 && rem != 0) {
+            remPlaces[rem] = place;
             rem = (rem * 10) % num;
             place++;
         }
 
+        // Find digits
+        int n = 1;
+        int[] digits = new int[place];
+        for (int i = 0; i < place; i++) {
+            digits[i] = n / num;
+            n = n % num * 10;
+        }
+
         // Print output
-        System.out.println(1.0 / num);
         StringBuilder output = new StringBuilder("1/");
         output.append(args[0]);
         output.append(" = 0.");
@@ -55,25 +63,23 @@ class ReciprocalCycles {
             cycleBegin = place;
             cycleLen = 0;
         } else {
-            cycleBegin = rems[rem];
+            cycleBegin = remPlaces[rem];
             cycleLen = place - cycleBegin;
         }
 
-        System.out.println("Begin: " + cycleBegin);
-
         // Non-repeating part
-        String dec = Integer.toString(((int) Math.pow(10, cycleBegin)) / num);
-        int lenDec = dec.length();
-        
-        for (int i = lenDec; i < cycleBegin; i++) {
-            output.append("0");
+        for (int i = 1; i < cycleBegin; i++) {
+            output.append(digits[i]);
         }
-        output.append(dec);
 
         // Repeating part
         if (cycleLen != 0) {
             output.append("(");
-            // AH
+            
+            for (int i = 0; i < cycleLen; i++) {
+                output.append(digits[cycleBegin + i]);
+            }
+
             output.append("), cycle length ");
             output.append(cycleLen);
         }
