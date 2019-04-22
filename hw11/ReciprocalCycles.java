@@ -28,49 +28,45 @@ class ReciprocalCycles {
             return;
         }
 
+        if (num == 1) {
+            System.out.println("1/1 = 1");
+            return;
+        }
+
         // Find decimal
         int[] rems = new int[num];
         int rem = 1;
-        int place = 0;
+        int place = 1;
 
         while (rems[rem] == 0 && rem != 0) {
-            System.out.println(rems[rem]);
             rems[rem] = place;
             rem = (rem * 10) % num;
             place++;
         }
 
-
-        int begin, end;
-        if (rem == 0) {
-            begin = 0;
-            end = 0;
-        } else {
-            begin = rems[rem];
-            end = place;
-        }
-
         // Print output
+        String floating = Double.toString(1.0 / num);
+        // System.out.println(floating);
         StringBuilder output = new StringBuilder("1/");
         output.append(args[0]);
-        output.append(" = 0.");
+        output.append(" = ");
 
-        // Before repeating part
-        for (int p = 1; p < begin; p++) {
-            output.append(((int) Math.pow(10, p)) / num);
-        }
+        if (rem == 0) {
+            output.append(floating);
+        } else {
+            int begin = rems[rem] - 1;
+            int end = place - 1;
 
-        // Repeating part
-        if (end != 0) {
+            // Before repeating part
+            output.append(floating.substring(0, begin + 2));
+
+            // Repeating part
             output.append("(");
-            for (int p = begin; p < end; p++) {
-                output.append(((int) Math.pow(10, p)) / num);
-            }
+            output.append(floating.substring(begin + 2, end + 2));
             output.append("), cycle length ");
             output.append(end - begin);
         }
 
         System.out.println(output.toString());
-        System.out.println("Begin: " + begin + "\nEnd: " + end);
     }
 }
