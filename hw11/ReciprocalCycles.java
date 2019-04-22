@@ -34,6 +34,10 @@ class ReciprocalCycles {
             return;
         }
 
+        System.out.println(findCycle(num));
+    }
+
+    public static String findCycle(int num) {
         // Find position/length of loop
         int[] remPlaces = new int[num];
         int rem = 1;
@@ -55,7 +59,7 @@ class ReciprocalCycles {
 
         // Print output
         StringBuilder output = new StringBuilder("1/");
-        output.append(args[0]);
+        output.append(num);
         output.append(" = 0.");
 
         int cycleBegin, cycleLen;
@@ -84,6 +88,6 @@ class ReciprocalCycles {
             output.append(cycleLen);
         }
 
-        System.out.println(output.toString());
+        return output.toString();
     }
 }
