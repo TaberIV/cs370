@@ -45,24 +45,38 @@ class ReciprocalCycles {
         }
 
         // Print output
-        String floating = Double.toString(1.0 / num);
-        // System.out.println(floating);
+        System.out.println(1.0 / num);
         StringBuilder output = new StringBuilder("1/");
         output.append(args[0]);
-        output.append(" = ");
+        output.append(" = 0.");
 
         if (rem == 0) {
-            output.append(floating);
+            String dec = Integer.toString(((int) Math.pow(10, place - 1)) / num);
+            while (dec.length() != place - 1) {
+                dec = "0" + dec;
+            }
+
+            output.append(dec);
         } else {
             int begin = rems[rem] - 1;
             int end = place - 1;
 
             // Before repeating part
-            output.append(floating.substring(0, begin + 2));
+            if (begin != 0) {
+                output.append(((int) Math.pow(10, begin)) / num);
+            }
 
             // Repeating part
             output.append("(");
-            output.append(floating.substring(begin + 2, end + 2));
+
+            if (begin == 0) {
+                output.append(((int) Math.pow(10, end)) / num);
+            }
+            else {
+                // String s = Integer.toString(((int) Math.pow(10, end)) / num);
+                // output.append(s.substring(begin, end));
+            }
+            
             output.append("), cycle length ");
             output.append(end - begin);
         }
