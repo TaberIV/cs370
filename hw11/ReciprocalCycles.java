@@ -36,7 +36,7 @@ class ReciprocalCycles {
         // Find decimal
         int[] rems = new int[num];
         int rem = 1;
-        int place = 1;
+        int place = 0;
 
         while (rems[rem] == 0 && rem != 0) {
             rems[rem] = place;
@@ -50,35 +50,32 @@ class ReciprocalCycles {
         output.append(args[0]);
         output.append(" = 0.");
 
+        int cycleBegin, cycleLen;
         if (rem == 0) {
-            String dec = Integer.toString(((int) Math.pow(10, place - 1)) / num);
-            while (dec.length() != place - 1) {
-                dec = "0" + dec;
-            }
-
-            output.append(dec);
+            cycleBegin = place;
+            cycleLen = 0;
         } else {
-            int begin = rems[rem] - 1;
-            int end = place - 1;
+            cycleBegin = rems[rem];
+            cycleLen = place - cycleBegin;
+        }
 
-            // Before repeating part
-            if (begin != 0) {
-                output.append(((int) Math.pow(10, begin)) / num);
-            }
+        System.out.println("Begin: " + cycleBegin);
 
-            // Repeating part
+        // Non-repeating part
+        String dec = Integer.toString(((int) Math.pow(10, cycleBegin)) / num);
+        int lenDec = dec.length();
+        
+        for (int i = lenDec; i < cycleBegin; i++) {
+            output.append("0");
+        }
+        output.append(dec);
+
+        // Repeating part
+        if (cycleLen != 0) {
             output.append("(");
-
-            if (begin == 0) {
-                output.append(((int) Math.pow(10, end)) / num);
-            }
-            else {
-                // String s = Integer.toString(((int) Math.pow(10, end)) / num);
-                // output.append(s.substring(begin, end));
-            }
-            
+            // AH
             output.append("), cycle length ");
-            output.append(end - begin);
+            output.append(cycleLen);
         }
 
         System.out.println(output.toString());

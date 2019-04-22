@@ -1,0 +1,125 @@
+Testing resistancematcher.py
+
+Running test 1...success [0.036 seconds]
+Running test 2...success [0.040 seconds]
+Running test 3...success [0.043 seconds]
+Running test 4...success [0.042 seconds]
+Running test 5...success [0.040 seconds]
+Running test 6...success [0.036 seconds]
+Running test 7...success [0.039 seconds]
+Running test 8...success [0.042 seconds]
+Running test 9...success [0.038 seconds]
+Running test 10...success [0.042 seconds]
+Running test 11...success [0.042 seconds]
+Running test 12...success [0.040 seconds]
+Running test 13...success [0.038 seconds]
+Running test 14...failure
+
+Expected________________________________________________________________________
+Max resistors in parallel: 2
+Tolerance: 10.0 %
+Target resistance of 3.5 ohms is possible with [7.5, 7.5] ohm resistors.
+Best fit: 3.7500 ohms
+Percent error: 7.14 %
+
+Received________________________________________________________________________
+Max resistors in parallel: 2
+Tolerance: 10.0 %
+Target resistance of 3.5 ohms is possible with [7.5, 7.5] ohm resistors.
+Best fit: 3.75 ohms
+Percent error: 7.14 %
+
+Running test 15...failure
+
+Expected________________________________________________________________________
+Max resistors in parallel: 2
+Tolerance: 5.0 %
+Target resistance of 3.5 ohms is possible with [5.0, 10.0] ohm resistors.
+Best fit: 3.3333 ohms
+Percent error: 4.76 %
+
+Received________________________________________________________________________
+Max resistors in parallel: 2
+Tolerance: 5.0 %
+Target resistance of 3.5 ohms is not possible.
+
+Running test 16...failure
+
+Expected________________________________________________________________________
+Max resistors in parallel: 3
+Tolerance: 2.0 %
+Target resistance of 1.5 ohms is possible with [3.8, 5.0, 5.0] ohm resistors.
+Best fit: 1.5079 ohms
+Percent error: 0.53 %
+
+Received________________________________________________________________________
+Max resistors in parallel: 3
+Tolerance: 2.0 %
+Target resistance of 1.5 ohms is possible with [3.8, 5.0, 5.0] ohm resistors.
+Best fit: 1.5079 ohms
+Percent error: 0.529 %
+
+Running test 17...failure
+
+Expected________________________________________________________________________
+Max resistors in parallel: 10
+Tolerance: 2.0 %
+Target resistance of 1.5 ohms is possible with [5.0, 5.0, 7.5, 7.5] ohm resistors.
+Best fit: 1.5000 ohms
+Percent error: 0.00 %
+
+Received________________________________________________________________________
+Max resistors in parallel: 10
+Tolerance: 2.0 %
+Target resistance of 1.5 ohms is possible with [8.2, 9.1, 9.1, 9.1, 9.1, 9.1] ohm resistors.
+Best fit: 1.4894 ohms
+Percent error: 0.705 %
+
+Running test 18...failure
+
+Expected________________________________________________________________________
+Max resistors in parallel: 10
+Tolerance: 0.1 %
+Target resistance of 3.5 ohms is possible with [8.2, 12.2, 12.2] ohm resistors.
+Best fit: 3.4979 ohms
+Percent error: 0.06 %
+
+Received________________________________________________________________________
+Max resistors in parallel: 10
+Tolerance: 0.1 %
+Target resistance of 3.5 ohms is not possible.
+
+Running test 19...failure
+
+Expected________________________________________________________________________
+Max resistors in parallel: 5
+Tolerance: 1.0 %
+Target resistance of 3.3 ohms is possible with [9.0, 18.0, 22.0, 22.0, 22.0] ohm resistors.
+Best fit: 3.3000 ohms
+Percent error: 0.00 %
+
+Received________________________________________________________________________
+Max resistors in parallel: 5
+Tolerance: 1.0 %
+Target resistance of 3.3 ohms is not possible.
+
+Running test 20...failure
+
+Expected________________________________________________________________________
+Max resistors in parallel: 10
+Tolerance: 0.1 %
+Target resistance of 3.4972274 ohms is possible with [11.0, 13.0, 17.0, 31.0, 37.0] ohm resistors.
+Best fit: 3.4972 ohms
+Percent error: 0.00 %
+
+Received________________________________________________________________________
+Max resistors in parallel: 10
+Tolerance: 0.1 %
+Target resistance of 3.497227535259405 ohms is possible with [31.0, 31.0, 31.0, 37.0, 37.0, 37.0, 37.0, 37.0, 37.0, 37.0] ohm resistors.
+Best fit: 3.497 ohms
+Percent error: 0.0079 %
+
+
+Total tests run: 20
+Number correct : 13
+Percent correct: 65.00
