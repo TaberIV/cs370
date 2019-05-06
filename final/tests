@@ -1,0 +1,34 @@
+Input1 :
+5 1
+1 2 3 4 5
+
+Output1 :
+2
+
+Input2 :
+8 2
+7 2 4 6 5 9 12 11
+
+Output2 :
+3
+
+Input3 :
+6 3
+2 4 6 3 5 10
+
+Output3 :
+2
+
+Input4 :
+3 3
+3 6 8
+
+Output4 :
+1
+
+Input5 :
+5 2
+2 5 7 9 10
+
+Output5 :
+3
